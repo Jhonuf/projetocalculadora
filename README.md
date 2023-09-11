@@ -1,22 +1,22 @@
 # CalculadoraMK1JP²
 
 ![OIG](https://github.com/Jhonuf/projetocalculadora/assets/143608018/3daf7d4b-19e9-407c-a502-05658201869d)
-
+# Badges
 <img alt="Static Badge" src="https://img.shields.io/badge/license-MIT-blue"> <img alt="Static Badge" src="https://img.shields.io/badge/version-1.0-green"> <img alt="Static Badge" src="https://img.shields.io/badge/release_date-september- red"> 
 
 # Índice 
 
-* [Título e Imagem de capa](#Título-e-Imagem-de-capa)
+* [Título e Imagem de capa](#título-e-Imagem-de-capa)
 * [Badges](#badges)
 * [Índice](#índice)
 * [Descrição do Projeto](#descrição-do-projeto)
 * [Status do Projeto](#status-do-Projeto)
-* [Funcionalidades](#funcionalidades)
+* [Funcionalidades do Projeto](#funcionalidades-do-projeto)
 * [Acesso ao Projeto](#acesso-ao-projeto)
-* [Tecnologias utilizadas](#tecnologias-utilizadas)
-* [Contribuidores](#pessoas-contribuidoras)
+* [Técnicas e tecnologias utilizadas](#técnicas-e-tecnologias-utilizadas)
+* [Contribuidores](#contribuidores)
 * [Licença](#licença)
-* [Autores](#pessoas-autoras)
+* [Autores](#autores)
 * [Conclusão](#conclusão)
 
 # Descrição do Projeto
