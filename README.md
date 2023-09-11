@@ -72,7 +72,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 # Autores
-[<img loading="lazy" src="https://avatars.githubusercontent.com/u/143594777?v=4" width=115><br><sub>Joemi J. Costa</sub>](https://github.com/jhonuf) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/143607790?v=4" width=115><br><sub>Pedro Mendes</sub>](https://github.com/PedroMendeseng/Pedro) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/143608018?v=4" width=115><br><sub>Pedro H. Nunes</sub>](https://github.com/Phzn777) |
+[<img loading="lazy" src="https://avatars.githubusercontent.com/u/143594777?v=4" width=115><br><sub>Joemi J. Costa</sub>](https://github.com/jhonuf) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/143607790?v=4" width=115><br><sub>Pedro Mendes</sub>](https://github.com/PedroMendeseng) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/143608018?v=4" width=115><br><sub>Pedro H. Nunes</sub>](https://github.com/Phzn777) |
 | :---: | :---: | :---: |
 
 # Conclusão
