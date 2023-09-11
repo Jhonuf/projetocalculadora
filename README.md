@@ -27,7 +27,7 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
 
-# :hammer: Funcionalidades do projeto
+# Funcionalidades do projeto
 
 - `Funcionalidade 1` Calculando: Calcular operções básicas (soma, subtração, divisão, multiplicação e quadrados)
 - `Funcionalidade 2` Histórico: Armazenar todas as opreções em um histórico, podendo também alterar os resultados apartir de alterações feitas no próprio histórico
@@ -35,11 +35,11 @@
 - `Funcionalidade 4` Tela de cadastro: Aba de login ou cadastro é a primeira aba secreta onde o usúario irá realizar uma das opções para acessar as próximas abas
 - `Funcionalidade 5` Diário: Após o login poderemos acessar a aba secreta que nada mais é que um diário secreto onde poderemos fazer nossas anotações pessoais 
 
-# 📁 Acesso ao projeto
+# Acesso ao projeto
 
 **Fazer o dowload em https://github.com/Jhonuf/projetocalculadora/commit/a8a7016bad1b63f6524572187bbeb47acb481e78**
 
-# ✔️ Técnicas e tecnologias utilizadas
+# Técnicas e tecnologias utilizadas
 
 - ``Python 3.11.3``
 - ``Visual studio code``
