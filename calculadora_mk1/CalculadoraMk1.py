@@ -22,6 +22,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
         self.zero_button_press_count = 0
         self.ui.img.setPixmap(QPixmap('img/imgcalculadora00.png'))
         self.ui.foto_login.setPixmap(QPixmap('foto_login/imglog.png'))
+       
         
         #### definido pag inicial ####
         self.ui.stackedWidget.setCurrentIndex(0)
@@ -73,6 +74,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
         self.ui.cadastros.clicked.connect(self.efetuar_cadastro)
         self.ui.voltarlog.clicked.connect(self.volta_login)
         self.ui.tela_inicial.clicked.connect(self.clear_display)
+        self.ui.salvar_alteracao.clicked.connect(self.salvar_alteracoes)
         self.clear_display()
     def carregar_cadastros(self):
         try:
@@ -97,7 +99,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
             self.ui.stackedWidget.setCurrentWidget(self.ui.tela_login)
             self.ui.frame_4.hide()
     
-    def mostrar_erro(self, mensagem):
+    def mostrar_erro(self, mensagem,titulo):
     # Define a mensagem de erro na QLabel
         titulo = "Erro de Cadastro"
         
@@ -126,12 +128,8 @@ class Calculadora_App(QtWidgets.QMainWindow):
         
         # Exiba uma mensagem de sucesso
             self.mostrar_mensagem("Cadastro Realizado", "Seu cadastro foi concluído com sucesso. Você pode fazer login agora.")
-
-
-
         return
         
-
     #### redimensionado ####
     def recalcular_tam_imagem(self, end_imagem:str, w: int = 16, h: int = 16):
         logo = QPixmap(end_imagem)
@@ -212,7 +210,55 @@ class Calculadora_App(QtWidgets.QMainWindow):
             self.ui.hist.setItem(row, 1, item_operador)
             self.ui.hist.setItem(row, 2, item_valor2)
             self.ui.hist.setItem(row, 3, item_resultado)
-     
+            item_valor1.setFlags(item_valor1.flags() | QtCore.Qt.ItemFlag.ItemIsEditable)
+            item_operador.setFlags(item_operador.flags() | QtCore.Qt.ItemFlag.ItemIsEditable)
+            item_valor2.setFlags(item_valor2.flags() | QtCore.Qt.ItemFlag.ItemIsEditable)
+            operacao_obj = Operacao(valor1, operador, valor2, resultado)
+            self.result_history[row] = operacao_obj
+    def atualizar_tabela(self):
+        self.ui.hist.clearContents()
+        for row, operacao_obj in enumerate(self.result_history):
+            valor1 = operacao_obj.get_valor1()
+            operador = operacao_obj.get_operador()
+            valor2 = operacao_obj.get_valor2()
+            resultado = operacao_obj.get_resultado()
+            valor1_item = QtWidgets.QTableWidgetItem(str(valor1))
+            operador_item = QtWidgets.QTableWidgetItem(operador)
+            valor2_item = QtWidgets.QTableWidgetItem(str(valor2))
+            resultado_item = QtWidgets.QTableWidgetItem(str(resultado))
+            self.ui.hist.setItem(row, 0, valor1_item)
+            self.ui.hist.setItem(row, 1, operador_item)
+            self.ui.hist.setItem(row, 2, valor2_item)
+            self.ui.hist.setItem(row, 3, resultado_item)
+    def salvar_alteracoes(self):
+        for row in range(self.ui.hist.rowCount()):
+            valor1_item = self.ui.hist.item(row, 0)
+            operador_item = self.ui.hist.item(row, 1)
+            valor2_item = self.ui.hist.item(row, 2)
+            resultado_item = self.ui.hist.item(row, 3)
+            novo_valor1 = float(valor1_item.text())
+            novo_operador = operador_item.text()
+            novo_valor2 = float(valor2_item.text())
+            # Calcule o novo resultado com base nos valores atualizados
+            if novo_operador == '+':
+                novo_resultado = novo_valor1 + novo_valor2
+            elif novo_operador == '-':
+                novo_resultado = novo_valor1 - novo_valor2
+            elif novo_operador == 'x':
+                novo_resultado = novo_valor1 * novo_valor2
+            elif novo_operador == '/':
+                if novo_valor2 != 0:  # Verifique a divisão por zero
+                    novo_resultado = novo_valor1 / novo_valor2
+            novo_resultado = round(novo_resultado, 2)  # Arredonde o resultado se desejar
+            # Atualize os valores na lista result_history
+            self.result_history[row]._valor1 = novo_valor1
+            self.result_history[row]._operador = novo_operador
+            self.result_history[row]._valor2 = novo_valor2
+            self.result_history[row]._resultado = novo_resultado
+            # Atualize a exibição do resultado na tabela
+            resultado_item.setText(str(novo_resultado))
+        self.atualizar_tabela()
+        
     #### volta para primeira pag ####
     def volta_pagina(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.page)
