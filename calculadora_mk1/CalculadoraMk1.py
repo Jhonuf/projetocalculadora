@@ -12,7 +12,7 @@ from operacao00 import Operacao
 class Calculadora_App(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_MainWindow()#criando meu obj com a interface grafica
+        self.ui = Ui_MainWindow()#### criando meu obj com a interface grafica ####
         self.ui.setupUi(self)
         self.result = 0
         self.current_operation = ""
@@ -27,7 +27,6 @@ class Calculadora_App(QtWidgets.QMainWindow):
         self.c = self.conn.cursor()
         self.c.execute('''CREATE TABLE IF NOT EXISTS usuarios
                  (usuario TEXT, senha TEXT)''')
-
         self.conn.commit()
        
         
@@ -53,8 +52,6 @@ class Calculadora_App(QtWidgets.QMainWindow):
         img_login = self.recalcular_tam_imagem('img/loginimg1.png',self.ui.foto_login.width(),self.ui.foto_login.height())
         self.ui.foto_login.setPixmap(img_login)
        
-        
-
         #### acoes dos boteos com operacoes e texto ####
         self.ui.botaoquadrado.clicked.connect(self.on_operator_pressed)
         self.ui.botaomais.clicked.connect(self.on_operator_pressed)
@@ -83,6 +80,8 @@ class Calculadora_App(QtWidgets.QMainWindow):
         self.ui.tela_inicial.clicked.connect(self.clear_display)
         self.ui.salvar_alteracao.clicked.connect(self.salvar_alteracoes)
         self.clear_display()
+
+        ####criando usuarios####
     def criar_usuarios(self):
         novo_usuario = self.ui.novousuario.text()
         nova_senha = self.ui.novasenha.text()
@@ -94,14 +93,14 @@ class Calculadora_App(QtWidgets.QMainWindow):
         if existing_user:
             self.mostrar_erro("Erro de Cadastro", "Nome de usuário já existe.")
         else:
-            # Adicionar o novo usuário ao banco de dados
+        #### Adicionar o novo usuário ao banco de dados ####
             self.c.execute("INSERT INTO usuarios (usuario, senha) VALUES (?, ?)",
             (novo_usuario, nova_senha))
             self.conn.commit()
             self.ui.novousuario.clear()
             self.ui.novasenha.clear()
             self.mostrar_mensagem("Cadastro Realizado", "Seu cadastro foi concluído com sucesso.")
-     # Verifica se o usuário e senha correspondem
+        ##### Verifica se o usuário e senha correspondem ####
     def verificar_login(self):
         usuario_login = self.ui.usuario_login.text()
         senha_login = self.ui.senha_login.text()
@@ -114,6 +113,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
             self.entra_diario()  
         else:
             QMessageBox.warning(self, "Erro de Login", "Usuário ou senha incorretos.")
+        #### efetuando login ####
     def efetuar_login(self):
         usuario_login = self.ui.usuario_login.text()
         senha_login = self.ui.senha_login.text()
@@ -130,6 +130,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
         else:
              self.ui.erro_us.setText('seu login ou senha estao incorretos')
              self.ui.frame_4.show()
+        #### efetuando cadastro ####
     def efetuar_cadastro(self):
         novo_usuario = self.ui.novousuario.text()
         nova_senha = self.ui.novasenha.text()
@@ -137,13 +138,13 @@ class Calculadora_App(QtWidgets.QMainWindow):
         if novo_usuario.strip() == "" or nova_senha.strip() == "":
             self.mostrar_erro("Erro de Cadastro", "Preencha todos os campos.")
             return
-        # Verificar se o nome de usuário já existe no banco de dados
+        #### Verificar se o nome de usuário já existe no banco de dados ####
         self.c.execute("SELECT * FROM usuarios WHERE usuario=?", (novo_usuario,))
         existing_user = self.c.fetchone()
         if existing_user:
             self.mostrar_erro("Erro de Cadastro", "Nome de usuário já existe.")
         else:
-            # Adicionar o novo usuário ao banco de dados
+            #### Adicionar o novo usuário ao banco de dados ####
             self.c.execute("INSERT INTO usuarios (usuario, senha) VALUES (?, ?)",
                            (novo_usuario, nova_senha))
             self.conn.commit()
@@ -162,36 +163,16 @@ class Calculadora_App(QtWidgets.QMainWindow):
             self.zero_button_press_count = 0  # Reseta a contagem
             self.ui.stackedWidget.setCurrentWidget(self.ui.tela_login)
             self.ui.frame_4.hide()
+
     #### mostra mensagem #### 
     def mostrar_mensagem(self, titulo, mensagem):
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle(titulo)
         msg_box.setText(mensagem)
         msg_box.exec()
-    #### efetuar o cadastro ####
-    def efetuar_cadastro(self):
-        novo_usuario = self.ui.novousuario.text()
-        nova_senha = self.ui.novasenha.text()
-    
-        if novo_usuario.strip() == "" or nova_senha.strip() == "":
-            self.mostrar_erro("Erro de Cadastro", "Nome de usuário já existe.")
 
-            return
-    
-        if novo_usuario in self.usuarios:
-            self.mostrar_erro("Erro de Cadastro", "Nome de usuário já existe.")
-        else:
-        # Adicione o novo usuário ao dicionário de usuários
-            self.usuarios[novo_usuario] = nova_senha
-            self.ui.novousuario.clear()
-            self.ui.novasenha.clear()
-            self.salvar_cadastros(self.usuarios)
-        
-        # Exiba uma mensagem de sucesso
-            self.mostrar_mensagem("Cadastro Realizado", "Seu cadastro foi concluído com sucesso. Você pode fazer login agora.")
-        return
+    #### Define a mensagem de erro ####
     def mostrar_erro(self,titulo,mensagem):
-    # Define a mensagem de erro na QLabel
         titulo = "Erro de Cadastro"
         msg_box = QtWidgets.QMessageBox()
         msg_box.setWindowTitle(titulo)
@@ -203,26 +184,11 @@ class Calculadora_App(QtWidgets.QMainWindow):
         logo = QPixmap(end_imagem)
         logo = logo.scaled(w, h, Qt.AspectRatioMode.KeepAspectRatio)
         return logo
-    #### efetuando login ####
-    def efetuar_login(self):
-        usuario_login = self.ui.usuario_login.text()
-        senha_login = self.ui.senha_login.text()
-
-        self.c.execute("SELECT * FROM usuarios WHERE usuario=? AND senha=?", (usuario_login, senha_login))
-        existing_user = self.c.fetchone()
-
-        if existing_user:
-            self.ui.usuario_login.clear()
-            self.ui.senha_login.clear()
-            self.ui.frame_4.hide()
-            self.entra_diario()
-            print('login realizado com sucesso')
-        else:
-             self.ui.erro_us.setText('seu login ou senha estao incorretos')
-             self.ui.frame_4.show()
+    
     #### entra no diario ####
     def entra_diario(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.diario)
+
     #### habilitar boteos no inicio ####
     def habilitar_botoes_operacao(self, liberar = True):
         self.ui.botaomais.setEnabled(liberar)
@@ -232,8 +198,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
         self.ui.botaoigual.setEnabled(liberar)
         self.ui.botaoquadrado.setEnabled(liberar)
         self.ui.cadastros.setEnabled(liberar)
-          #desativar la no qt
-
+          
     #### amarzenar dados ####
     def armazena_dados(self):
         self.calculate_result()  
@@ -311,7 +276,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
             novo_valor1 = float(valor1_item.text())
             novo_operador = operador_item.text()
             novo_valor2 = float(valor2_item.text())
-            # Calcule o novo resultado com base nos valores atualizados
+            #### Calcule o novo resultado com base nos valores atualizados ####
             if novo_operador == '+':
                 novo_resultado = novo_valor1 + novo_valor2
             elif novo_operador == '-':
@@ -319,15 +284,15 @@ class Calculadora_App(QtWidgets.QMainWindow):
             elif novo_operador == 'x':
                 novo_resultado = novo_valor1 * novo_valor2
             elif novo_operador == '/':
-                if novo_valor2 != 0:  # Verifique a divisão por zero
+                if novo_valor2 != 0:  #### Verifique a divisão por zero ####
                     novo_resultado = novo_valor1 / novo_valor2
-            novo_resultado = round(novo_resultado, 2)  # Arredonde o resultado se desejar
-            # Atualize os valores na lista result_history
+            novo_resultado = round(novo_resultado, 2)  #### Arredonde o resultado se desejar ####
+            #### Atualize os valores na lista result_history ####
             self.result_history[row]._valor1 = novo_valor1
             self.result_history[row]._operador = novo_operador
             self.result_history[row]._valor2 = novo_valor2
             self.result_history[row]._resultado = novo_resultado
-            # Atualize a exibição do resultado na tabela
+            #### Atualize a exibição do resultado na tabela ####
             resultado_item.setText(str(novo_resultado))
         self.atualizar_tabela()
 
@@ -342,7 +307,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
     def on_digit_pressed(self):
         
         if self.calculator_on:
-            # sender(): indica quem realizou a acao
+            #### sender(): indica quem realizou a acao ####
             digit = self.sender().text()
             
             current_display = self.ui.tela.text()
@@ -354,7 +319,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
                 self.ui.tela.setText(new_display)
         self.habilitar_botoes_operacao()
     
-    ####valor decimal####
+    #### valor decimal ####
     def on_decimal_pressed(self):
         
         if self.calculator_on:
@@ -381,7 +346,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
                         
             self.ui.tela.setText(f"{self.result}{self.current_operation}")
     
-    ####verificar ponto####
+    #### verificar ponto ####
     def tem_ponto(self, result):
         if "." in result:
             return float(result)
@@ -423,7 +388,7 @@ class Calculadora_App(QtWidgets.QMainWindow):
                 self.ui.tela.setText("Error")
                 return
             
-           # Criar objeto Operacao
+           #### Criar objeto Operacao ####
             operacao_obj = Operacao(esq_dir[0], self.current_operation, esq_dir[1], self.result)
             self.result_history.append(operacao_obj)  # Adicionar o objeto Operacao à lista
             self.ui.tela.setText(str(self.result))
