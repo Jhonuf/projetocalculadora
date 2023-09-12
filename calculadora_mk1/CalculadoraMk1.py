@@ -1,6 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sys
-import json
 import sqlite3
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel
